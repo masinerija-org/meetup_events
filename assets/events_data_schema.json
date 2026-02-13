@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "groupByUrlname": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "events": {
+              "type": "object",
+              "properties": {
+                "totalCount": {
+                  "type": "number"
+                },
+                "pageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "endCursor": {
+                      "type": "string"
+                    },
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "__typename": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "endCursor",
+                    "hasNextPage",
+                    "__typename"
+                  ]
+                },
+                "edges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "node": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "eventUrl": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "venue": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "city": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              },
+                              "country": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "address",
+                              "city",
+                              "state",
+                              "country"
+                            ]
+                          },
+                          "dateTime": {
+                            "type": "string"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "endTime": {
+                            "type": "string"
+                          },
+                          "going": {
+                            "type": "object",
+                            "properties": {
+                              "totalCount": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "totalCount"
+                            ]
+                          },
+                          "featuredEventPhoto": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "baseUrl": {
+                                "type": "string"
+                              },
+                              "highResUrl": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "baseUrl",
+                              "highResUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "eventUrl",
+                          "description",
+                          "venue",
+                          "dateTime",
+                          "createdTime",
+                          "endTime",
+                          "going",
+                          "featuredEventPhoto"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "node"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "totalCount",
+                "pageInfo",
+                "edges"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "events"
+          ]
+        }
+      },
+      "required": [
+        "groupByUrlname"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

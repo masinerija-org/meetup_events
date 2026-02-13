@@ -1,0 +1,86 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+Meetup.com event data exporter for groups without PRO/API access. Simulates browser GraphQL API calls to download past events, cover photos, and attendee lists. Target group: Data Science Club Belgrade (`data-science-club-belgrade`).
+
+## Environment Setup
+
+```bash
+pip install -r requirements.txt
+```
+
+Dependencies (no version pinning): `pydantic`, `httpx`, `loguru`, `tqdm`
+
+## Running Scripts
+
+```bash
+# Phase 1: Download raw event JSON data
+python get_events_data.py data-science-club-belgrade
+
+# Phase 2: Process events, download cover photos and attendee CSVs
+python process_events.py
+```
+
+## Architecture
+
+Two-phase pipeline with shared models:
+
+**`models.py`**: Shared Pydantic models for API response validation (`EventsApiResponse`, `EventNode`, etc.), CSV export (`EventRecord` with `from_event_node()` classmethod), and attendees report response (`AttendeeReportResponse`).
+
+**Phase 1 — `get_events_data.py`**: Accepts a Meetup group URL slug as argument. Issues POST requests to `https://www.meetup.com/gql2` with `getPastGroupEvents` GraphQL operation. Paginates using cursor-based navigation (`pageInfo.endCursor` / `pageInfo.hasNextPage`). Saves raw JSON responses to `json/`.
+
+**Phase 2 — `process_events.py`**: Reads JSON files from `json/`, validates with Pydantic models from `models.py`, extracts event data. Downloads cover photos and attendee CSVs (via `generateEventAttendeesReport` GraphQL operation). Outputs `events/events.csv` and per-event folders.
+
+## Key Conventions
+
+- **Authentication**: Cookie from `.cookie` file, included in all Meetup HTTP requests
+- **Rate limiting**: Random 1–3 second sleep between requests
+- **Retries**: Up to 3 retries per request with sleep between attempts
+- **Idempotency**: Skip download/processing if output files already exist
+- **Error handling**: Graceful — continue processing remaining events on per-event failure
+- **Logging**: loguru — INFO for 2xx responses, ERROR with response body for non-2xx
+
+## Data Model Field Mapping
+
+API response fields (nested under `data.groupByUrlname.events.edges[].node`) map to Pydantic model fields:
+
+| API Field | Model Field |
+|---|---|
+| `id` | `event_id` |
+| `title` | `title` |
+| `eventUrl` | `event_url` |
+| `description` | `description` |
+| `venue.name` | `venue_name` |
+| `venue.address` | `venue_address` |
+| `venue.city` | `venue_city` |
+| `venue.country` | `venue_country` |
+| `dateTime` | `date_time` |
+| `createdTime` | `created_time` |
+| `endTime` | `end_time` |
+| `going.totalCount` | `going_count` |
+| `featuredEventPhoto.highResUrl` | `featured_photo_url` |
+| *(local path)* | `cover_image` |
+
+Note: The spec references `eventURL` but the actual JSON schema uses `eventUrl` (camelCase).
+
+## Output Folder Structure
+
+```
+json/                          # Raw API response JSON files
+events/
+  events.csv                   # Aggregated event metadata
+  <date>_<id>_<slug>/          # Per-event folder (slug = first 40 chars of title, slugified)
+    cover_photo.<ext>          # Event cover photo
+    attendees_<id>.csv         # Attendee list
+assets/
+  events_data_schema.json      # JSON schema for API responses
+  group_info.md                # Group description
+  group_cover.jpeg             # Group cover image
+```
+
+## Specification
+
+Full requirements are in `SPECS_1.md`. Always consult it for implementation details.
