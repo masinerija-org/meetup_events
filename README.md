@@ -46,6 +46,15 @@ Reads JSON data from `json/`, validates it, and for each event:
 
 Re-running either script is safe -- already-downloaded files are skipped.
 
+### Phase 3: Generate and serve the web application
+
+```bash
+python prepare_web_data.py
+cd web && python -m http.server 8000
+```
+
+Processes event data and group info into a static single-page web application. Open `http://localhost:8000` to view the event gallery with group information, administrator list, and individual event detail pages.
+
 ## Folder Structure
 
 ```
@@ -53,6 +62,7 @@ Re-running either script is safe -- already-downloaded files are skipped.
 requirements.txt                 # Python dependencies
 get_events_data.py               # Phase 1: download event JSON data
 process_events.py                # Phase 2: process and export
+prepare_web_data.py              # Phase 3: generate static web app
 models.py                        # Shared Pydantic data models
 
 json/                            # Raw API response JSON files
@@ -70,6 +80,13 @@ assets/                          # Project assets
   events_data_schema.json        # JSON schema for API responses
   group_info.md                  # Group description
   group_cover.jpeg               # Group cover image
+
+web/                             # Static web application
+  index.html                     # SPA shell
+  css/styles.css                 # Styles
+  js/app.js                      # Router and renderers
+  js/site_data.js                # Generated data (run prepare_web_data.py)
+  images/                        # Copied images (run prepare_web_data.py)
 ```
 
 ## Features
