@@ -1,0 +1,9 @@
+.claude/
+.idea/
+__pycache__/
+**.csv
+.python-version
+.cookie
+json/
+**.json
+*.log
