@@ -34,7 +34,7 @@ Routes should be:
 - `/` for landing page 
 - `event/<event_id>` for loading event data by its event_id
 
-Web application should be stored in `/web` folder.
+Web application should be stored in `/docs` folder.
 For all the data you need to statically provide for web application, use data in @events/ and use Python for any processing.
 
 ## Output

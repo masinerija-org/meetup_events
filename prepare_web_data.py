@@ -9,7 +9,7 @@ from markdown import markdown
 
 ASSETS_DIR = Path("assets")
 EVENTS_DIR = Path("events")
-WEB_DIR = Path("web")
+WEB_DIR = Path("docs")
 WEB_IMAGES_DIR = WEB_DIR / "images"
 WEB_EVENTS_IMAGES_DIR = WEB_IMAGES_DIR / "events"
 WEB_JS_DIR = WEB_DIR / "js"

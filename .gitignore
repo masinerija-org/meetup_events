@@ -7,4 +7,3 @@ __pycache__/
 json/
 **.json
 *.log
-web/js/site_data.js

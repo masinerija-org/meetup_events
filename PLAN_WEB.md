@@ -6,14 +6,14 @@ Static one-pager web application for Data Science Club Meetup, built with vanill
 
 ## Architecture
 
-- **`prepare_web_data.py`** (project root): Python script that reads `events/events.csv` and `assets/group_info.md`, converts markdown descriptions to HTML, copies images, and outputs `web/js/site_data.js`
-- **`web/`**: Self-contained static web application
+- **`prepare_web_data.py`** (project root): Python script that reads `events/events.csv` and `assets/group_info.md`, converts markdown descriptions to HTML, copies images, and outputs `docs/js/site_data.js`
+- **`docs/`**: Self-contained static web application
 
 ## File Structure
 
 ```
 prepare_web_data.py
-web/
+docs/
   index.html                    # SPA shell
   css/
     styles.css                  # Layout, components, responsive design
@@ -32,10 +32,10 @@ web/
 
 ## Implementation Steps
 
-1. Create `prepare_web_data.py` — parse group_info.md, read events.csv, convert descriptions to HTML via `markdown` library, copy images to `web/images/`, write `web/js/site_data.js`
-2. Create `web/index.html` — minimal SPA shell with `<div id="app">`
-3. Create `web/css/styles.css` — CSS Grid layouts, responsive breakpoints (3→2→1 cols for events, 4→2 cols for admins)
-4. Create `web/js/app.js` — hash-based router, template-literal renderers for home and event pages
+1. Create `prepare_web_data.py` — parse group_info.md, read events.csv, convert descriptions to HTML via `markdown` library, copy images to `docs/images/`, write `docs/js/site_data.js`
+2. Create `docs/index.html` — minimal SPA shell with `<div id="app">`
+3. Create `docs/css/styles.css` — CSS Grid layouts, responsive breakpoints (3→2→1 cols for events, 4→2 cols for admins)
+4. Create `docs/js/app.js` — hash-based router, template-literal renderers for home and event pages
 5. Update `.gitignore` — exclude generated images and site_data.js
 6. Update `CLAUDE.md` and `README.md` with Phase 3 documentation
 
@@ -44,14 +44,14 @@ web/
 ```
 assets/group_info.md  ──┐
 assets/group_cover.jpeg ─┤
-events/events.csv ───────┤──→ prepare_web_data.py ──→ web/js/site_data.js
-events/*/cover_photo.* ──┘                        ──→ web/images/
+events/events.csv ───────┤──→ prepare_web_data.py ──→ docs/js/site_data.js
+events/*/cover_photo.* ──┘                        ──→ docs/images/
 ```
 
 ## Verification
 
 ```bash
 python prepare_web_data.py
-cd web && python -m http.server 8000
+cd docs && python -m http.server 8000
 # Open http://localhost:8000
 ```
