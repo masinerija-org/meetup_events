@@ -81,7 +81,7 @@ assets/                          # Project assets
   group_info.md                  # Group description
   group_cover.jpeg               # Group cover image
 
-web/                             # Static web application
+docs/                            # Static web application
   index.html                     # SPA shell
   css/styles.css                 # Styles
   js/app.js                      # Router and renderers
