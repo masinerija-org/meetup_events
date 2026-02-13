@@ -1,5 +1,5 @@
 
-# Meetup date exporter
+# Meetup data exporter
 
 ## Problem statement
 
